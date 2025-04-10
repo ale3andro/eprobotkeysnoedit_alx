@@ -518,8 +518,20 @@ function setProgramState(state,dir){
 function nextCommand(){
   if (act.play && !act.pause){
   	if (act.cmdExec == act.program.length){
+      // https://www.sitepoint.com/get-url-parameters-with-javascript/
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      letter = urlParams.get('letter');
+      if (letter=='Π') {
+        final_pos = [0, 3];
+      }
+      if (final_pos[0] == act.position[0] && final_pos[1] == act.position[1]) {
+        console.log('Winner!');
+      } else {
+        console.log('Loser');
+      }
       setProgramState(ENDOFPROGRAM);
-  	  return(0);// end of program
+      return(0);// end of program
   	}
     highlightCommand(act.cmdExec);
     act.selectd = act.cmdExec;
@@ -578,7 +590,7 @@ function stop(){
   clearInterval(inter2);
 }
 
-function runFast(currentCommand){
+function runFast2(currentCommand){
   if (!act.play || (act.play && act.pause)){
   	clearTrace();
     act.position = [0,4];
@@ -716,7 +728,7 @@ function init(maze,levels){
   if (ge('cdelete1')){
   ge('cdelete1').addEventListener('click',deleteCommand);}
 
-  ge('cdelete').addEventListener('click',function(){
+  ge('cdelete').addEventListener('click',function(){    
   	if (!act.play || (act.play && act.pause)){
   		restart();
   	}
