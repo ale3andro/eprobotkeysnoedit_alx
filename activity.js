@@ -560,7 +560,7 @@ function nextCommand(){
       if (letter != null) {
         final_pos = dict[letter];
       }
-      if (typeof final_pos !== undefined) {
+      if (typeof final_pos !== 'undefined') {
         if (final_pos[0] == act.position[0] && final_pos[1] == act.position[1]) {
           console.log('Winner!');
           ge('eprobot').classList.add('animate__animated', 'animate__tada');
