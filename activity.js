@@ -137,6 +137,33 @@ var inter,inter1,inter2;
 
 const allCommands = 30;
 
+var dict = {};
+dict["Α"] = [0, 0];
+dict["Β"] = [1, 0];
+dict["Γ"] = [3, 0];
+dict["Δ"] = [5, 0];
+dict["Ε"] = [6, 0];
+dict["Ζ"] = [1, 1];
+dict["Η"] = [3, 1];
+dict["Θ"] = [4, 1];
+dict["Ι"] = [5, 1];
+dict["Κ"] = [6, 1];
+dict["Λ"] = [0, 2];
+dict["Μ"] = [1, 2];
+dict["Ν"] = [2, 2];
+dict["Ξ"] = [3, 2];
+dict["Ο"] = [5, 2];
+dict["Π"] = [0, 3];
+dict["Ρ"] = [2, 3];
+dict["Σ"] = [4, 3];
+dict["Τ"] = [5, 3];
+dict["Υ"] = [6, 3];
+dict["Φ"] = [1, 4];
+dict["Χ"] = [2, 4];
+dict["Ψ"] = [4, 4];
+dict["Ω"] = [6, 4];
+
+
 function showCommand(cmdCode,cell){
   for (var i=0; i<4; i++){//for all cmdCodes
     if (i==cmdCode){
@@ -522,14 +549,27 @@ function nextCommand(){
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       letter = urlParams.get('letter');
-      if (letter=='Π') {
-        final_pos = [0, 3];
+      if (letter != null) {
+        final_pos = dict[letter];
       }
-      if (final_pos[0] == act.position[0] && final_pos[1] == act.position[1]) {
-        console.log('Winner!');
+      if (final_pos!=undefined) {
+        if (final_pos[0] == act.position[0] && final_pos[1] == act.position[1]) {
+          console.log('Winner!');
+          ge('eprobot').classList.add('animate__animated', 'animate__tada');
+          ge('eprobot').addEventListener('animationend', () => {
+            ge('eprobot').classList.remove('animate__animated', 'animate__tada');
+          });
+        } else {
+          console.log('Loser');
+          ge('eprobot').classList.add('animate__animated', 'animate__wobble');
+          ge('eprobot').addEventListener('animationend', () => {
+            ge('eprobot').classList.remove('animate__animated', 'animate__wobble');
+          });
+        }
       } else {
-        console.log('Loser');
+        console.log('Game without objective');
       }
+      
       setProgramState(ENDOFPROGRAM);
       return(0);// end of program
   	}
