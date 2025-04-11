@@ -47,6 +47,13 @@ function shuffle(a) {
   return result;
 }
 
+function alxClearCommandOrdinals() {
+  const alxElements = document.getElementsByClassName("alxOrdinals");
+  while (alxElements.length>0) {
+    alxElements[0].remove();
+  }
+}
+
 function ge(id) {
   return document.getElementById(id);
 }
@@ -174,6 +181,7 @@ function showCommand(cmdCode,cell){
     }
   }
   const childNode = document.createElement("span");
+  childNode.classList.add("alxOrdinals");
   childNode.style.fontSize='200%';
   childNode.style.color='black';
   childNode.style.position='absolute';
@@ -630,7 +638,7 @@ function stop(){
   clearInterval(inter2);
 }
 
-function runFast2(currentCommand){
+function runFast(currentCommand){
   if (!act.play || (act.play && act.pause)){
   	clearTrace();
     act.position = [0,4];
@@ -738,7 +746,6 @@ function init(maze,levels){
 
   }
 
-
   bindCommand('cforward',FD);
   bindCommand('cbackward',BK);
   bindCommand('cleft',LT);
@@ -771,6 +778,7 @@ function init(maze,levels){
   ge('cdelete').addEventListener('click',function(){    
   	if (!act.play || (act.play && act.pause)){
   		restart();
+      alxClearCommandOrdinals();
   	}
   });
 
