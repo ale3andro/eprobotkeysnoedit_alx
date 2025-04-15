@@ -250,6 +250,15 @@ function deleteProgram(){
   drawProgram();
 }
 
+function deleteLastCommand() {
+  alxClearCommandOrdinals();
+  if (act.program.length>0) {
+    act.program.splice(act.program.length-1, 1);
+    drawProgram();
+    stop();
+  }
+}
+
 function deleteCommand(cmdNum){
   	if (!act.play || (act.play && act.pause)){
 		var idSuffix = ['fd','rt','bk','lt'];
@@ -784,8 +793,11 @@ function init(maze,levels){
 
   ge('cstop').addEventListener('click',stop);
 
-  ge('cpause').addEventListener('click',function(){
-  	setProgramState(PAUSED);
+  ge('cdelete1').addEventListener('click',function(){
+  	deleteLastCommand();
+    return;
+    
+    setProgramState(PAUSED);
     act.selected = act.cmdExec-1;
   });
   ge('cpencil').addEventListener('click',function(){
